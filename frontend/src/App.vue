@@ -1,26 +1,51 @@
+<!-- src/App.vue -->
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+	<div id="app">
+		<nav>
+			<ul>
+				<li><router-link to="/">首頁</router-link></li>
+				<li><router-link to="/videos">影片</router-link></li>
+				<li><router-link to="/nutrition">營養計算</router-link></li>
+				<li><router-link to="/progress">紀錄</router-link></li>
+				<li><router-link to="/login">登入</router-link></li>
+			</ul>
+		</nav>
+		<router-view></router-view>
+	</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+	name: 'App',
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+nav {
+	padding: 1rem;
+	display: flex;
+	justify-content: center;
+}
+
+ul {
+	list-style: none;
+	display: flex;
+	gap: 3rem;
+	padding: 0;
+	margin: 0;
+}
+
+li {
+	display: inline;
+}
+
+a {
+	color: black;
+	text-decoration: none;
+}
+
+a.router-link-exact-active {
+	font-weight: bold;
 }
 </style>
