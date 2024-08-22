@@ -35,4 +35,10 @@ public class MenuController {
         List<GymSet> sets = itemService.findAll();
         return new ResponseEntity<>(sets, HttpStatus.OK);
     }
+
+    @GetMapping("/api/v0/items")
+    public ResponseEntity<?> showRecords() {
+        List<GymSet> sets = itemService.findAll();
+        return new ResponseEntity<>(sets, HttpStatus.OK);
+    }
 }

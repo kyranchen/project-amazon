@@ -3,5 +3,11 @@
     "menu.nav.video": "Video", 
     "menu.nav.nutritious": "Calories Balance", 
     "menu.nav.record": "Record", 
-    "menu.nav.login": "Login"
+    "menu.nav.login": "Login", 
+
+    "progress.record.num": "Number", 
+    "progress.record.name": "Name", 
+    "progress.record.weight": "Weight", 
+    "progress.record.sets": "Sets", 
+    "progress.send": "Send"
 }

@@ -3,5 +3,11 @@
     "menu.nav.video": "影片", 
     "menu.nav.nutritious": "卡路里計算", 
     "menu.nav.record": "健身紀錄", 
-    "menu.nav.login": "登入"
+    "menu.nav.login": "登入", 
+
+    "progress.record.num": "序列", 
+    "progress.record.name": "訓練名稱", 
+    "progress.record.weight": "重量", 
+    "progress.record.sets": "組數", 
+    "progress.send": "送出"
 }
