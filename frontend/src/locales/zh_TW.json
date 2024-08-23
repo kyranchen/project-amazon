@@ -4,10 +4,21 @@
     "menu.nav.nutritious": "卡路里計算", 
     "menu.nav.record": "健身紀錄", 
     "menu.nav.login": "登入", 
+    "menu.lang.tw": "中",
+    "menu.lang.en": "en",
 
+    "progress.list": "訓練清單",
+    "progress.record": "紀錄",
     "progress.record.num": "序列", 
+    "progress.record.date": "日期",
     "progress.record.name": "訓練名稱", 
     "progress.record.weight": "重量", 
     "progress.record.sets": "組數", 
-    "progress.send": "送出"
+    "progress.send": "送出",
+
+    "part.chest": "胸", 
+    "part.leg": "腿", 
+    "part.shoulder": "肩", 
+    "part.back": "背", 
+    "part.arm": "手臂"
 }

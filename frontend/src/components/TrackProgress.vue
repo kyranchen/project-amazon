@@ -1,45 +1,49 @@
 <template>
     <div class="container">
-        <div class="practices">
-            <div class="column" v-for="(types, part) in practices" :key="types">
-                <h3>{{ part }}</h3>
-                <ul>
-                    <li v-for="type in types" :key="type">{{ type }}</li>
-                </ul>
+        <div class="practice-container">
+            <h1>{{ $t('progress.list') }}</h1>
+            <div class="practices">
+                <div class="column" v-for="(types, part) in practices" :key="types">
+                    <h3>{{ $t(`part.${part}`) }}</h3>
+                    <ul>
+                        <li v-for="type in types" :key="type">{{ type }}</li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <div>
-            <h1>紀錄</h1>
-            <div class="item-input">
-                <input type="text" placeholder="項目" v-model="form.name">
-                <input type="text" placeholder="重量" v-model="form.weight">
-                <input type="number" placeholder="組數" v-model="form.sets">
-                <button type="submit" @click="submitForm()">送出</button>
-            </div>
-            <div class="showButton">
-                <button @click="checkRecords()">check Record</button>
-            </div>
 
-            <div v-if="showTable" class="custom-table">
-                <table>
-                    <thead>
-                        <th>{{ $t('progress.record.num') }}</th>
-                        <th>{{ $t('progress.record.name') }}</th>
-                        <th>{{ $t('progress.record.weight') }}</th>
-                        <th>{{ $t('progress.record.sets') }}</th>
-                    </thead>
-                    <tbody>
-                        <template v-for="rec in records" :key="rec.id">
-                            <tr>
-                                <td>{{ rec.id }}</td>
-                                <td>{{ rec.name }}</td>
-                                <td>{{ rec.weight }}</td>
-                                <td>{{ rec.sets }}</td>
-                            </tr>
-                        </template>
-                    </tbody>
-                </table>
-
+        <div class="record-container">
+            <h1>{{ $t('progress.record') }}</h1>
+            <div class="record">
+                <div class="item-input">
+                    <input type="text" :placeholder="$t('progress.record.name')" v-model="form.name">
+                    <input type="text" :placeholder="$t('progress.record.weight')" v-model="form.weight">
+                    <input type="number" :placeholder="$t('progress.record.sets')" v-model="form.sets">
+                    <input type="date" v-model="form.date">
+                    <button type="submit" @click="submitForm()">{{ $t('progress.send') }}</button>
+                </div>
+                <div class="custom-table">
+                    <table>
+                        <thead>
+                            <th style="width: 20vw;">{{ $t('progress.record.num') }}</th>
+                            <th style="width: 20vw;">{{ $t('progress.record.date') }}</th>
+                            <th style="width: 20vw;">{{ $t('progress.record.name') }}</th>
+                            <th style="width: 20vw;">{{ $t('progress.record.weight') }}</th>
+                            <th style="width: 20vw;">{{ $t('progress.record.sets') }}</th>
+                        </thead>
+                        <tbody>
+                            <template v-for="rec in records" :key="rec.id">
+                                <tr>
+                                    <td>{{ rec.id }}</td>
+                                    <td>{{ rec.date }}</td>
+                                    <td>{{ rec.name }}</td>
+                                    <td>{{ rec.weight }}</td>
+                                    <td>{{ rec.sets }}</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -57,22 +61,45 @@ export default {
                 name: '', 
                 weight: '', 
                 sets: '',
+                date: '',
             }, 
             records: [], 
             practices: {},
-            showTable: false
         }
     },
     mounted() {
-        this.setPractices();
+        this.fetchPractices();
+        this.checkRecords();
     },
     methods: {
-        setPractices() {
-            this.practices = {
-                "chest": ["bench press", "chest press"], 
-                "leg": ["leg press", "glute"], 
-                "shoulder": ["shoulder press"]
+        async fetchPractices() {
+            try {
+                const response = await fetch("http://localhost:9000/api/v0/practices", 
+                    {
+                        method: 'GET', 
+                        headers: {
+                            'Content-Type': 'application/json', 
+                        }, 
+                    }
+                )
+                const data = await response.json();
+                this.practices = data;
+                this.buildPracticeMap(this.practices);
+            } catch (error) {
+                console.error(error);
             }
+        },
+        buildPracticeMap(practices) {
+            let obj = {};
+            for (let practice of practices) {
+                if (!(practice.bodyPart in obj)) {
+                    obj[practice.bodyPart] = [];
+                    obj[practice.bodyPart].push(practice.name);
+                } else {
+                    obj[practice.bodyPart].push(practice.name);
+                }
+            }
+            this.practices = obj;
         },
         async checkRecords() {
             try {
@@ -86,7 +113,6 @@ export default {
                 )
                 const data = await response.json();
                 this.records = data;
-                this.showTable = true;
             } catch (error) {
                 console.error(error);
             }
@@ -105,6 +131,7 @@ export default {
                 const data = await response.json();
                 this.records = data;
                 this.showTable = true;
+                this.form = {}
             } catch (error) {
                 console.error(error);
             }
@@ -114,15 +141,23 @@ export default {
 </script>
 
 <style scoped>
+
 .container {
+    font-family: "Montserrat", "Noto Sans TC", sans-serif;
     background-color: #ddd;
     height: 100vh;
     background-color: #eee;
     border-radius: 5px;
-    padding: 20px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
+    overflow: auto;
 
+}
+
+.practice-container {
+    margin-top: 20px;
+    text-align: center;
 }
 
 .practices {
@@ -171,28 +206,72 @@ export default {
     border-bottom: none;
 }
 
+/* Container for the form items */
 .item-input {
+    width: 50%;
     display: flex;
-    gap: 30px;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Input field styles */
 .item-input input {
+    border: 1px solid #ddd;
     border-radius: 5px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 12px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
 }
 
+/* Focus state for inputs */
+.item-input input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button styling */
 .item-input button {
+    background-color: #007bff;
+    color: white;
+    border: none;
     border-radius: 5px;
-    padding: 10px;
-
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
 }
 
+/* Hover effect for button */
+.item-input button:hover {
+    background-color: #0056b3;
+}
 
-table {
-    margin-top: 10px;
+/* Additional styles for form alignment */
+.item-input input[type="date"] {
+    padding: 10px 12px;
+}
+
+.record-container {
+    text-align: center;
+}
+
+.record {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.custom-table {
     width: 100%;
     border-collapse: collapse;
+    border-radius: 5px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     background-color: white;
 }

@@ -1,5 +1,7 @@
 package com.app.gym.model;
 
+import java.util.Date;
+
 public class GymSet {
 
     private Integer id;
@@ -9,6 +11,16 @@ public class GymSet {
     private Double weight;
 
     private Integer sets;
+
+    private Date date;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public Integer getId() {
         return id;
@@ -49,6 +61,7 @@ public class GymSet {
                 ", name='" + name + '\'' +
                 ", weight=" + weight +
                 ", sets=" + sets +
+                ", date=" + date +
                 '}';
     }
 }

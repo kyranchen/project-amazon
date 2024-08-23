@@ -3,11 +3,22 @@
     "menu.nav.video": "Video", 
     "menu.nav.nutritious": "Calories Balance", 
     "menu.nav.record": "Record", 
-    "menu.nav.login": "Login", 
+    "menu.nav.login": "Login",
+    "menu.lang.tw": "中",
+    "menu.lang.en": "en", 
 
+    "progress.list": "Practice List",
+    "progress.record": "Record",
     "progress.record.num": "Number", 
+    "progress.record.date": "Date",
     "progress.record.name": "Name", 
     "progress.record.weight": "Weight", 
     "progress.record.sets": "Sets", 
-    "progress.send": "Send"
+    "progress.send": "Send", 
+
+    "part.chest": "Chest", 
+    "part.leg": "Leg", 
+    "part.shoulder": "Shoulder", 
+    "part.back": "Back", 
+    "part.arm": "Arm"
 }
