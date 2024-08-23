@@ -16,16 +16,17 @@
             <h1>{{ $t('progress.record') }}</h1>
             <div class="record">
                 <div class="item-input">
+                    <input type="date" v-model="form.date">
+                    <input type="text" :placeholder="$t('part.group')" v-model="form.group">
                     <input type="text" :placeholder="$t('progress.record.name')" v-model="form.name">
                     <input type="text" :placeholder="$t('progress.record.weight')" v-model="form.weight">
                     <input type="number" :placeholder="$t('progress.record.sets')" v-model="form.sets">
-                    <input type="date" v-model="form.date">
                     <button type="submit" @click="submitForm()">{{ $t('progress.send') }}</button>
                 </div>
                 <div class="custom-table">
                     <table>
                         <thead>
-                            <th style="width: 20vw;">{{ $t('progress.record.num') }}</th>
+                            <th style="width: 20vw;">{{ $t('part.group') }}</th>
                             <th style="width: 20vw;">{{ $t('progress.record.date') }}</th>
                             <th style="width: 20vw;">{{ $t('progress.record.name') }}</th>
                             <th style="width: 20vw;">{{ $t('progress.record.weight') }}</th>
@@ -34,7 +35,7 @@
                         <tbody>
                             <template v-for="rec in records" :key="rec.id">
                                 <tr>
-                                    <td>{{ rec.id }}</td>
+                                    <td>{{ rec.group }}</td>
                                     <td>{{ rec.date }}</td>
                                     <td>{{ rec.name }}</td>
                                     <td>{{ rec.weight }}</td>
@@ -62,6 +63,7 @@ export default {
                 weight: '', 
                 sets: '',
                 date: '',
+                gruop: '',
             }, 
             records: [], 
             practices: {},
@@ -132,6 +134,7 @@ export default {
                 this.records = data;
                 this.showTable = true;
                 this.form = {}
+                await this.fetchPractices();
             } catch (error) {
                 console.error(error);
             }

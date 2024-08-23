@@ -42,13 +42,14 @@ public class ItemDaoImpl implements ItemDao{
             newId = 1;
         }
         // Insert the new row
-        String insertSql = "INSERT INTO user_records (id, name, weight, reps, date) VALUES (:id, :name, :weight, :sets, :date)";
+        String insertSql = "INSERT INTO user_records (id, name, weight, reps, date, body_part) VALUES (:id, :name, :weight, :sets, :date, :group)";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", newId);
         params.addValue("name", gymSet.getName());
         params.addValue("weight", gymSet.getWeight());
         params.addValue("sets", gymSet.getSets());
         params.addValue("date", gymSet.getDate());
+        params.addValue("group", gymSet.getGroup());
         namedParameterJdbcTemplate.update(insertSql, params);
     }
 
@@ -60,6 +61,7 @@ public class ItemDaoImpl implements ItemDao{
             gymSet.setWeight(rs.getDouble("weight"));
             gymSet.setSets(rs.getInt("reps"));
             gymSet.setDate(rs.getDate("date"));
+            gymSet.setGroup(rs.getString("body_part"));
             return gymSet;
         }
     }
