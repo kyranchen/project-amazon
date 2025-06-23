@@ -30,7 +30,7 @@ public class ExerciseDaoImpl implements ExerciseDao{
         params.addValue("name", exercise.getName());
         params.addValue("group", exercise.getBodyPart());
         List<Exercise> result = namedParameterJdbcTemplate.query(sql, params, new ExerciseMapper());
-        if (result.size() == 0) {
+        if (result.isEmpty()) {
             return null;
         } else {
             return result.get(0);

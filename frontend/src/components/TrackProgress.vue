@@ -241,6 +241,7 @@ export default {
 /* Button styling */
 .item-input button {
     background-color: #007bff;
+    font-weight: bold;
     color: white;
     border: none;
     border-radius: 5px;
