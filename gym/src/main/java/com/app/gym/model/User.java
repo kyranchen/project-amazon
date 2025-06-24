@@ -1,8 +1,8 @@
 package com.app.gym.model;
 
-import javax.persistence.*;
 
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Set;
 
@@ -13,6 +13,7 @@ import java.util.Set;
 @Builder
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
